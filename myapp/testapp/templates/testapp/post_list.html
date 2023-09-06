@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post List</title>
+</head>
+<body>
+    <h1>Post List</h1>
+    
+    <form method="post" action="{% url 'add_post' %}">
+        {% csrf_token %}
+        <textarea name="content" placeholder="Write your post"></textarea>
+        <button type="submit">Post</button>
+    </form>
+    
+    <ul>
+        {% for post in posts %}
+            <li>
+                <p>{{ post.content }}</p>
+                <p>Posted by: {{ post.user.username }}</p>
+                <p>Posted at: {{ post.created_at }}</p>
+                
+                <form method="post" action="{% url 'add_comment' post.id %}">
+                    {% csrf_token %}
+                    <textarea name="text" placeholder="Add a comment"></textarea>
+                    <button type="submit">Comment</button>
+                </form>
+                
+                <ul>
+                    {% for comment in post.comment_set.all %}
+                        <li>
+                            <p>{{ comment.text }}</p>
+                            <p>Commented by: {{ comment.user.username }}</p>
+                            <p>Commented at: {{ comment.created_at }}</p>
+                        </li>
+                    {% empty %}
+                        <li>No comments yet.</li>
+                    {% endfor %}
+                </ul>
+                
+                <form method="post" action="{% url 'like_post' post.id %}">
+                    {% csrf_token %}
+                    <button type="submit">
+                        {% if request.user in post.likes.all %}
+                            Unlike
+                        {% else %}
+                            Like
+                        {% endif %}
+                    </button>
+                </form>
+                
+            </li>
+        {% empty %}
+            <li>No posts available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

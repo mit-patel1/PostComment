@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Post</title>
+</head>
+<body>
+    <h1>Add Post</h1>
+    
+    <form method="post" action="{% url 'add_post' %}">
+        {% csrf_token %}
+        <textarea name="content" placeholder="Write your post"></textarea>
+        <button type="submit">Post</button>
+    </form>
+</body>
+</html>

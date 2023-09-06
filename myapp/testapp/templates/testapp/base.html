@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Project{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>{% block header %}My Project{% endblock %}</h1>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="{% url 'post_list' %}">Home</a></li>
+            <!-- Add more navigation links as needed -->
+        </ul>
+    </nav>
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer>
+        <!-- Footer content here -->
+    </footer>
+</body>
+</html>
